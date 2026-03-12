@@ -1,0 +1,30 @@
+name: Deploy Static HTML and CSS to GitHub Pages
+
+# Trigger the workflow on push to the main branch
+
+on:
+  push:
+    branches:
+      - main
+# Define what operating system the job should run on
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Step 2: Check the files that have been checked out
+    - name: Display files
+      run: ls
+
+    # Step 3: Deploy to GitHub Pages
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./ # The HTML and CSS files lie in the root directory, hence that should be the publish directory
